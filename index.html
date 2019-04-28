@@ -239,6 +239,147 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/10-12章笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李玉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李玉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/28/10-12章笔记/" itemprop="url">10-12章笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-28T11:25:22+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="Liskov-替换原则-LSP"><a href="#Liskov-替换原则-LSP" class="headerlink" title="Liskov 替换原则(LSP)"></a>Liskov 替换原则(LSP)</h4><p>子类型(subtype) 必须能够替换掉它们的基类型(base type) </p>
+<p>一个违反LSP 的简单例子。</p>
+<p>​    正方形 ISA 矩形</p>
+<p>OCP 是00D 中很多说法的核心。如果这个原则应用得有效，应用程序就会具有更多的可维护</p>
+<p>性、可重用性以及健壮性。LSP 是使OCP 成为可能的主要原则之一。正是子类型的可替换性才使得</p>
+<p>使用基类类型的模块在无需修改的情况下就可以扩展。这种可替换性必须是开发人员可以隐式依赖</p>
+<p>的东西。因此，如果没有显式地强制基类类型的契约，那么代码就必须良好地并且明显地表达出这</p>
+<p>一点。</p>
+<p>IS-A 是关于行为的。</p>
+<p>术语”IS-A” 的含意过于宽泛以至于不能作为子类型的定义。子类型的正确定义是“可替换性的“，这里的可替换性可以通过显式或者隐式的契约来定义。</p>
+<h4 id="依赖倒置原则-DIP"><a href="#依赖倒置原则-DIP" class="headerlink" title="依赖倒置原则(DIP)"></a>依赖倒置原则(DIP)</h4><p>a. 高层模块不应该依赖于低层模块。二者都应该依赖于抽象。</p>
+<p>b. 抽象不应该依赖于细节。细节应该依赖于抽象。</p>
+<p>使用传统的过程化程序设计所创建出来的依赖关系结构，策略是依赖于细节的。这是糟糕的，因为这样会使策略受到细节改变的影响。面向对象的程序设计倒置了依赖关系结构，使得细节和策略都依赖于抽象，并且常常是客户拥有服务接口。</p>
+<p>事实上，这种依赖关系的倒置正是好的面向对象设计的标志所在。使用何种语言来编写程序是无关紧要的。如果程序的依赖关系是倒置的，它就是面向对象的设计。如果程序的依赖关系不是倒置的，它就是过程化的设计。</p>
+<p>依赖倒置原则是实现许多面向对象技术所宣称的好处的基本低层机制。它的正确应用对于创建可重用的框架来说是必须的。同时它对于构建在变化面前富有弹性的代码也是非常重要的。由于抽象和细节被彼此隔离，所以代码也非常容易维护。</p>
+<h4 id="接口隔离原则-ISP"><a href="#接口隔离原则-ISP" class="headerlink" title="接口隔离原则(ISP)"></a>接口隔离原则(ISP)</h4><p>重点在于接口按照职能来拆分，做到彼此独立。</p>
+<p>胖类(fat class) 会导致它们的客户程序之间产生不正常的并且有害的耦合关系。当一个客户程</p>
+<p>序要求该胖类进行一个改动时，会影响到所有其他的客户程序。因此，客户程序应该仅仅依赖千它</p>
+<p>们实际调用的方法。通过把胖类的接口分解为多个特定于客户程序的接口，可以实现这个目标。每</p>
+<p>个特定于客户程序的接口仅仅声明它的特定客户或者客户组调用的那些函数。接着，该胖类就可以</p>
+<p>继承所有特定于客户程序的接口，并实现它们。这就解除了客户程序和它们没有调用的方法间的依</p>
+<p>赖关系，并使客户程序之间互不依赖。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/13-17章笔记/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1130,7 +1271,7 @@ DelayedTyper
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
