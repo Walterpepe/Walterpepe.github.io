@@ -239,6 +239,161 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/01/ch04-NetworkLayerDataPlane/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李玉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李玉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/01/ch04-NetworkLayerDataPlane/" itemprop="url">ch04-NetworkLayerDataPlane</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-01T09:55:04+08:00">
+                2019-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="Review-Questions"><a href="#Review-Questions" class="headerlink" title="Review Questions"></a>Review Questions</h4><h5 id="R1"><a href="#R1" class="headerlink" title="R1."></a>R1.</h5><p>网络层分组叫做数据报。路由器处于第三层的，链路交换机是第二层</p>
+<h5 id="R2"><a href="#R2" class="headerlink" title="R2."></a>R2.</h5><p>数据报网络中两个最重要的功能是：转发和路由，虚电路网络中增加了一项：连接建立</p>
+<h5 id="R3"><a href="#R3" class="headerlink" title="R3."></a>R3.</h5><p>转发是指在路由器内部将输入端口的分组转移到正确的输出端口；而路由是指路由器决定从源到目的地的路径</p>
+<h5 id="R4"><a href="#R4" class="headerlink" title="R4."></a>R4.</h5><p>是的</p>
+<h5 id="R5"><a href="#R5" class="headerlink" title="R5."></a>R5.</h5><p>略</p>
+<h5 id="R6"><a href="#R6" class="headerlink" title="R6."></a>R6.</h5><p>IP电话等</p>
+<h5 id="R7"><a href="#R7" class="headerlink" title="R7."></a>R7.</h5><p>有了影子副本，就可以在每个输入端口本地进行转发决策，而无需基于每个数据包调用集中式路由处理器，从而避免集中处理瓶颈。</p>
+<h5 id="R8"><a href="#R8" class="headerlink" title="R8."></a>R8.</h5><p>分别是内存交换，总线交换和纵横结构。只有纵横结构可以并行转发。</p>
+<h5 id="R9"><a href="#R9" class="headerlink" title="R9."></a>R9.</h5><p>如果分组到达的速率大于交换结构的速率，那么就会造成排队，最终队列越来越长，导致分组丢失。解决方法就是提升交换结构的速率至 n 倍的输入线路速率，n 是端口数</p>
+<h5 id="R10"><a href="#R10" class="headerlink" title="R10."></a>R10.</h5><p>假设输入速率和输出速率一致，当分组到达单个输出端口的速率大于线路速率时，就会造成排队，最终队列越来越长，导致分组丢失。增加交换结构的速率对减缓排队现象没有任何帮助。</p>
+<h5 id="R11"><a href="#R11" class="headerlink" title="R11."></a>R11.</h5><p>HOL：head-of-the-line<br>HOL阻塞的意思是，队列最前端的分组由于某种原因被阻塞，它后面的分组即使可以被转发结构转发，也需要等到最前端被转发之后才可以被转发。<br>它出现在输入端口。</p>
+<h5 id="R12"><a href="#R12" class="headerlink" title="R12."></a>R12.</h5><p>路由器有 IP 地址，每一个接口都有一个 IP</p>
+<h5 id="R13"><a href="#R13" class="headerlink" title="R13."></a>R13.</h5><p>11011111.00000001.00000011.00011011</p>
+<h5 id="R14"><a href="#R14" class="headerlink" title="R14."></a>R14.</h5><p>略</p>
+<h5 id="R15"><a href="#R15" class="headerlink" title="R15."></a>R15.</h5><p>8、3</p>
+<h5 id="R16"><a href="#R16" class="headerlink" title="R16."></a>R16.</h5><p>20+20/20+20+40 = 50%<br>50% 的开销</p>
+<h5 id="R17"><a href="#R17" class="headerlink" title="R17."></a>R17.</h5><p>IP 头部中“协议”字段，可以用来判断是 TCP 或 UDP 或其他。</p>
+<h5 id="R18"><a href="#R18" class="headerlink" title="R18."></a>R18.</h5><p>无线路由器内置 DHCP 服务器，使用 DHCP 分发 IP 地址等。当然了，路由器也使用 NAT，因为只有一个公网 IP 要分配个五台 PC。</p>
+<h5 id="R19"><a href="#R19" class="headerlink" title="R19."></a>R19.</h5><p>略</p>
+<h5 id="R20"><a href="#R20" class="headerlink" title="R20."></a>R20.</h5><p>同意，因为 IPv6 的数据报被封装在 IPv4 的数据报中</p>
+<h5 id="R21"><a href="#R21" class="headerlink" title="R21."></a>R21.</h5><p>链路状态路由协议是层次式的，网络中的路由器并不向邻居传递“路由项”，而是通告给邻居一些链路状态。与距离矢量路由协议相比，链路状态协议对路由的计算方法有本质的差别。距离矢量协议是平面式的，所有的路由学习完全依靠邻居，交换的是路由项。链路状态协议只是通告给邻居一些链路状态。运行该路由协议的路由器不是简单地从相邻的路由器学习路由，而是把路由器分成区域，收集区域的所有的路由器的链路状态信息，根据状态信息生成网络拓扑结构，每一个路由器再根据拓扑结构计算出路由。</p>
+<h5 id="R22"><a href="#R22" class="headerlink" title="R22."></a>R22.</h5><p>路由器被组织成 AS，在一个 AS 中，所有路由器运行相同的AS内部协议，在跨越 AS 时需要使用AS间协议。</p>
+<h5 id="R23"><a href="#R23" class="headerlink" title="R23."></a>R23.</h5><p>没有必要</p>
+<h5 id="R24"><a href="#R24" class="headerlink" title="R24."></a>R24.</h5><p>不会改变，因为初始表中通过 B 到 z 跳数是 7，然而来自 A 的通告到 z 需要 11 跳，因此表不会改变。</p>
+<h5 id="R25"><a href="#R25" class="headerlink" title="R25."></a>R25.</h5><p>RIP 路由选择更新信息在邻居间通过使用一种 RIP 响应报文来交换，大约 30 秒交换一次。<br>而 OSPF 向 AS 内部所有其他路由广播路由选择信息，不仅仅是邻居，每当一条链路的状态发生变化时，路由器就会广播链路状态信息，即使未发生变化，它也周期性地广播链路状态。</p>
+<h5 id="R26"><a href="#R26" class="headerlink" title="R26."></a>R26.</h5><p>路径上的 AS 序列</p>
+<h5 id="R27"><a href="#R27" class="headerlink" title="R27."></a>R27.</h5><p>请看课本 P268</p>
+<h5 id="R28"><a href="#R28" class="headerlink" title="R28."></a>R28.</h5><p>略</p>
+<h5 id="R29"><a href="#R29" class="headerlink" title="R29."></a>R29.</h5><p>子网是较大型网络的一部分，不包含路由器，其边界定义为路由器和主机的接口。<br>前缀是 CDIR 地址的网络部分。<br>带有 属性 的 前缀 叫做一条 BGP 路由。</p>
+<h5 id="R30"><a href="#R30" class="headerlink" title="R30."></a>R30.</h5><p>路由器使用 AS-PATH 来检测和防止循环通告，也使用它在多条路径中选择相同前缀。<br>NEXT-HOP 指示沿给定前缀的通告路径（位于接收通告的 AS 之外）的第一路由器的IP地址。</p>
+<h5 id="R31"><a href="#R31" class="headerlink" title="R31."></a>R31.</h5><p>举个例子，ISP B 不想传输从 ISP A 和 C 之间的流量，它就可以不向 A 和 C 通告这条路由路径。</p>
+<h5 id="R32"><a href="#R32" class="headerlink" title="R32."></a>R32.</h5><p>使用单播模拟广播，效率低，它可能会在同一条链路上多次发送相同的数据包；而且寻址困难，源必须知道所有接收方的地址</p>
+<h5 id="R33"><a href="#R33" class="headerlink" title="R33."></a>R33.</h5><p>a. 无控制洪泛和受控洪泛都可能接收到同一个分组的多个副本<br>b. 无控制洪泛可能通过相同的出链路转发多个分组的副本</p>
+<h5 id="R34"><a href="#R34" class="headerlink" title="R34."></a>R34.</h5><p>不需要</p>
+<h5 id="R35"><a href="#R35" class="headerlink" title="R35."></a>R35.</h5><p>IGMP 为主机提供了一种方式，让它通知第一跳路由器，本机上的一个应用程序想要加入一个特定的多播组。 IGMP 协议只运行在主机和它的第一跳多播路由器之间。然后由多播路由器与其他多播路由器协同工作，即运行多播路由选择协议，以确保加入主机的多播组的数据被路由到适当的最后一跳路由器，并从那里路由到主机。</p>
+<h5 id="R36"><a href="#R36" class="headerlink" title="R36."></a>R36.</h5><p>组共享的树：所有的发送方都在同一条路由树上发送多播流量<br>基于源的树：每个源都有自己的一颗多播路由选择树</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/17/ch03-TransportLayer/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1654,127 +1809,6 @@ DelayedTyper
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/heap-size-问题/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="李玉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李玉的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/05/heap-size-问题/" itemprop="url">heap size 问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T20:53:58+08:00">
-                2018-11-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>配置 ES_HEAP_SIZE 应略小于32G，可用如下命令测试， bool UseCompressedOops := true时为符合要求的配置，否则性能打了不小的折扣。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ JAVA_HOME=`/usr/libexec/java_home -v 1.8` java -Xmx32766m -XX:+PrintFlagsFinal 2&gt; /dev/null | grep UseCompressedOops</span><br><span class="line">     bool UseCompressedOops := true</span><br><span class="line">$ JAVA_HOME=`/usr/libexec/java_home -v 1.8` java -Xmx32767m -XX:+PrintFlagsFinal 2&gt; /dev/null | grep UseCompressedOops</span><br><span class="line">     bool UseCompressedOops = false</span><br></pre></td></tr></table></figure></p>
-<p>具体参考， <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1825,7 +1859,7 @@ DelayedTyper
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
