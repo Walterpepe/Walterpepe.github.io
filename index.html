@@ -239,6 +239,288 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/ch03/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李玉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李玉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/07/ch03/" itemprop="url">ch03</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-07T21:34:02+08:00">
+                2019-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/ch02/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李玉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李玉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/07/ch02/" itemprop="url">ch02</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-07T20:38:24+08:00">
+                2019-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>分了四小节。</p>
+<p>第一小节主要讲用bit来表示信息。</p>
+<p>0,1二进制计算机中电子信号很容易实现。</p>
+<p>byte = 8bits。</p>
+<p>int 4byte</p>
+<p>long 8byte.</p>
+<p>布尔计算</p>
+<p>And Or Not Xor</p>
+<p>逻辑运算 </p>
+<p>&amp;&amp; || !</p>
+<p>移位操作</p>
+<p>左移，逻辑右移和算术右移</p>
+<p>第二部分讲整数的表示，第三部分讲整数的讲整数运算</p>
+<p>无符号数</p>
+<p><img src="image-20191007211241261.png" alt="image-20191007211241261"></p>
+<p>补码</p>
+<p><img src="image-20191007211330693.png" alt="image-20191007211330693"></p>
+<p>UMin  =  0</p>
+<p>UMax   =   2<em>w</em>– 1</p>
+<p><em>TMin</em>  =   –2<em>w</em>–1</p>
+<p><em>TMax</em>   =   2<em>w</em>–1 – 1</p>
+<p><strong>casting</strong>, 无符号数和补码间的转化</p>
+<p><strong>Bit pattern is maintained</strong></p>
+<p><strong>But reinterpreted</strong></p>
+<p><strong>Can have unexpected effects: adding or subtracting 2^w</strong></p>
+<p><strong>Expanding, truncating</strong></p>
+<p><strong>Expanding (e.g., short</strong> <strong>int</strong> <strong>to</strong> <strong>int</strong>)</p>
+<p>Unsigned: zeros added</p>
+<p>Signed: sign extension</p>
+<p>Both yield expected result</p>
+<p><strong>Truncating (e.g., unsigned to unsigned short)</strong></p>
+<p>Unsigned/signed: bits are truncated</p>
+<p>Result reinterpreted</p>
+<p>Unsigned: mod operation</p>
+<p>Signed: similar to mod</p>
+<p>For small numbers yields expected behavior</p>
+<p>加法、减法、乘法、移位</p>
+<p>无符号数加法</p>
+<p><em>s</em>  =   UAdd<em>w</em>(<em>u</em> , <em>v</em>)  =  <em>u</em> + <em>v</em> mod 2^<em>w</em></p>
+<p>补码加法。</p>
+<p>Mathematical addition + possible addition or subtraction of 2w</p>
+<p>第四部分讲浮点数</p>
+<p>IEEE Standard 754</p>
+<p>主要放在做实验上。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/01/hello-world/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -544,7 +826,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -552,6 +834,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>
