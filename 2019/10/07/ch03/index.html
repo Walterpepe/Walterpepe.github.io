@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="李玉的博客">
 <meta property="og:description" content="intel x86 的重要型号。 8086 i386 pentium 4E core 2 core i7 摩尔定律 gcc -Og -o p p1.c p2.c 生成编译文件 gcc -Og -S mstore.c gcc -Og -c mstore.c objdump -d mstore.o Byte  b Word w Double word l Quad word q 整数寄存器 重要的几个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-14T09:32:03.483Z">
+<meta property="og:updated_time" content="2019-10-14T09:40:30.404Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ch03">
 <meta name="twitter:description" content="intel x86 的重要型号。 8086 i386 pentium 4E core 2 core i7 摩尔定律 gcc -Og -o p p1.c p2.c 生成编译文件 gcc -Og -S mstore.c gcc -Og -c mstore.c objdump -d mstore.o Byte  b Word w Double word l Quad word q 整数寄存器 重要的几个">
@@ -336,17 +336,67 @@
 <p>立即寻址，寄存器寻址、内存寻址。</p>
 <p>一般的形式为：</p>
 <p>Imm(rb,ri,s)  =  Imm + R[rb]+ R[ri] * s</p>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Address   Computation</th>
+<th>Address</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x8(%rdx)</td>
+<td>0xf000 + 0x8</td>
+<td>0xf008</td>
+</tr>
+<tr>
+<td>(%rdx,%rcx)</td>
+<td>0xf000 + 0x100</td>
+<td>0xf100</td>
+</tr>
+<tr>
+<td>(%rdx,%rcx,4)</td>
+<td>0xf000 + 4*0x100</td>
+<td>0xf400</td>
+</tr>
+<tr>
+<td>0x80(,%rdx,2)</td>
+<td>2*0xf000 + 0x80</td>
+<td>0x1e080</td>
+</tr>
+</tbody>
+</table>
 <p>数据移动指令，move</p>
 <p>类似于赋值？</p>
+<p>§<strong>movq</strong> <strong>(**</strong>%<strong><strong>r</strong></strong>cx<strong><strong>),</strong></strong>%<strong><strong>r</strong></strong>ax**</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void swap</span><br><span class="line">   (long *xp, long *yp) </span><br><span class="line">&#123;</span><br><span class="line">  long t0 = *xp;</span><br><span class="line">  long t1 = *yp;</span><br><span class="line">  *xp = t1;</span><br><span class="line">  *yp = t0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">swap:</span><br><span class="line">   movq    (%rdi), %rax</span><br><span class="line">   movq    (%rsi), %rdx</span><br><span class="line">   movq    %rdx, (%rdi)</span><br><span class="line">   movq    %rax, (%rsi)</span><br><span class="line">   ret</span><br></pre></td></tr></table></figure>
 <p>入栈与出栈</p>
 <p>pushq S</p>
 <p>popq D</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">long m12(long x)</span><br><span class="line">&#123;</span><br><span class="line">  return x*12;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">leaq (%rdi,%rdi,2), %rax # t &lt;- x+x*2</span><br><span class="line">salq $2, %rax            # return t&lt;&lt;2</span><br></pre></td></tr></table></figure>
 <p>算术运算与逻辑运算</p>
 <p>一堆指令</p>
 <p> Load Effective Address 与 move 类似</p>
 <p>一元、二元运算符</p>
+<p>incq  Dest  Dest = Dest + 1</p>
+<p>decq  Dest  Dest = Dest - 1</p>
+<p>negq  Dest  Dest = - Dest</p>
+<p>notq  Dest  Dest = ~Dest</p>
+<p>addq  Src,Dest  Dest = Dest + Src</p>
+<p>subq  Src,Dest  Dest = Dest - Src</p>
+<p>imulq  Src,Dest  Dest = Dest * Src</p>
+<p>salq  Src,Dest  Dest = Dest &lt;&lt; Src  Also called shlq</p>
+<p>sarq  Src,Dest  Dest = Dest &gt;&gt; Src  Arithmetic</p>
+<p>shrq  Src,Dest  Dest = Dest &gt;&gt; Src  Logical</p>
+<p>xorq  Src,Dest  Dest = Dest ^ Src</p>
+<p>andq  Src,Dest  Dest = Dest &amp; Src</p>
+<p>orq  Src,Dest  Dest = Dest | Src</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">long arith</span><br><span class="line">(long x, long y, long z)</span><br><span class="line">&#123;</span><br><span class="line">  long t1 = x+y;</span><br><span class="line">  long t2 = z+t1;</span><br><span class="line">  long t3 = x+4;</span><br><span class="line">  long t4 = y * 48;</span><br><span class="line">  long t5 = t3 + t4;</span><br><span class="line">  long rval = t2 * t5;</span><br><span class="line">  return rval;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">arith:</span><br><span class="line">  leaq    (%rdi,%rsi), %rax   # t1</span><br><span class="line">  addq    %rdx, %rax          # t2</span><br><span class="line">  leaq    (%rsi,%rsi,2), %rdx</span><br><span class="line">  salq    $4, %rdx            # t4</span><br><span class="line">  leaq    4(%rdi,%rdx), %rcx  # t5</span><br><span class="line">  imulq   %rcx, %rax          # rval</span><br><span class="line">  ret</span><br></pre></td></tr></table></figure>
 <p>移位操作</p>
 <p>特殊的算术操作</p>
+<p>总结：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">History of Intel processors and architectures</span><br><span class="line">	Evolutionary design leads to many quirks and artifacts</span><br><span class="line">C, assembly, machine code</span><br><span class="line">	New forms of visible state: program counter, registers, ...</span><br><span class="line">	Compiler must transform statements, expressions, procedures into low-level instruction sequences</span><br><span class="line">Assembly Basics: Registers, operands, move</span><br><span class="line">	The x86-64 move instructions cover wide range of data movement forms</span><br><span class="line">Arithmetic</span><br><span class="line">	C compiler will figure out different instruction combinations to carry out computation</span><br></pre></td></tr></table></figure>
 
       
     </div>
