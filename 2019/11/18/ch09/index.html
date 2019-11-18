@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="csapp,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="虚拟内存  了解物理地址和虚拟地址的区别 理解虚拟内存在缓存、内存管理与保护中所扮演的角色 掌握虚拟内存到物理内存的翻译机制 理解现代计算机系统中虚拟内存的应用 理解动态内存分配的基本概念 区别内部碎片与外部碎片 掌握管理动态内存分配的三种方法 了解垃圾回收的基本原理 了解内存使用中常见的错误  这一讲的内容，跟之前介绍的缓存系统有异曲同工之妙，唯一的差别是，因为涉及的概念和横跨的系统层级增多，难">
+<meta name="keywords" content="csapp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ch09">
+<meta property="og:url" content="http://yoursite.com/2019/11/18/ch09/index.html">
+<meta property="og:site_name" content="李玉的博客">
+<meta property="og:description" content="虚拟内存  了解物理地址和虚拟地址的区别 理解虚拟内存在缓存、内存管理与保护中所扮演的角色 掌握虚拟内存到物理内存的翻译机制 理解现代计算机系统中虚拟内存的应用 理解动态内存分配的基本概念 区别内部碎片与外部碎片 掌握管理动态内存分配的三种方法 了解垃圾回收的基本原理 了解内存使用中常见的错误  这一讲的内容，跟之前介绍的缓存系统有异曲同工之妙，唯一的差别是，因为涉及的概念和横跨的系统层级增多，难">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-18T06:15:16.683Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ch09">
+<meta name="twitter:description" content="虚拟内存  了解物理地址和虚拟地址的区别 理解虚拟内存在缓存、内存管理与保护中所扮演的角色 掌握虚拟内存到物理内存的翻译机制 理解现代计算机系统中虚拟内存的应用 理解动态内存分配的基本概念 区别内部碎片与外部碎片 掌握管理动态内存分配的三种方法 了解垃圾回收的基本原理 了解内存使用中常见的错误  这一讲的内容，跟之前介绍的缓存系统有异曲同工之妙，唯一的差别是，因为涉及的概念和横跨的系统层级增多，难">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/18/ch09/">
+
+
+
+
+
+  <title>ch09 | 李玉的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李玉的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/18/ch09/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李玉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李玉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ch09</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-18T14:09:19+08:00">
+                2019-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>虚拟内存</p>
+<ol>
+<li>了解物理地址和虚拟地址的区别</li>
+<li>理解虚拟内存在缓存、内存管理与保护中所扮演的角色</li>
+<li>掌握虚拟内存到物理内存的翻译机制</li>
+<li>理解现代计算机系统中虚拟内存的应用</li>
+<li>理解动态内存分配的基本概念</li>
+<li>区别内部碎片与外部碎片</li>
+<li>掌握管理动态内存分配的三种方法</li>
+<li>了解垃圾回收的基本原理</li>
+<li>了解内存使用中常见的错误</li>
+</ol>
+<p>这一讲的内容，跟之前介绍的缓存系统有异曲同工之妙，唯一的差别是，因为涉及的概念和横跨的系统层级增多，难度更大了。</p>
+<h2 id="从物理内存到虚拟内存"><a href="#从物理内存到虚拟内存" class="headerlink" title="从物理内存到虚拟内存"></a>从物理内存到虚拟内存</h2><p>物理地址一般应用在简单的嵌入式微控制器中（汽车、电梯、电子相框等），因为应用的范围有严格的限制，不需要在内存管理中引入过多的复杂度。</p>
+<p>但是对于计算机（以及其他智能设备）来说，虚拟地址则是必不可少的，通过 MMU(Memory management unit)把虚拟地址(Virtual Address, VA)转换为物理地址(Physical Address, PA)，再由此进行实际的数据传输。</p>
+<p>使用虚拟内存主要是基于下面三个考虑：</p>
+<ol>
+<li>可以更有效率的使用内存：使用 DRAM 当做部分的虚拟地址空间的缓存</li>
+<li>简化内存管理：每个进程都有统一的线性地址空间</li>
+<li>隔离地址控件：进程之间不会相互影响；用户程序不能访问内核信息和代码</li>
+</ol>
+<h2 id="虚拟内存的三个角色"><a href="#虚拟内存的三个角色" class="headerlink" title="虚拟内存的三个角色"></a>虚拟内存的三个角色</h2><h3 id="作为缓存工具"><a href="#作为缓存工具" class="headerlink" title="作为缓存工具"></a>作为缓存工具</h3><p>概念上来说，虚拟内存就是存储在磁盘上的 N 个连续字节的数组。这个数组的部分内容，会缓存在 DRAM 中，在 DRAM 中的每个缓存块(cache block)就称为页(page)</p>
+<h3 id="作为内存管理工具"><a href="#作为内存管理工具" class="headerlink" title="作为内存管理工具"></a>作为内存管理工具</h3><p>每个进程都有自己的虚拟地址空间，这样一来，对于进程来说，它们看到的就是简单的线性空间（但实际上在物理内存中可能是间隔、支离破碎的）</p>
+<p>在内存分配中没有太多限制，每个虚拟页都可以被映射到任何的物理页上。这样也带来一个好处，如果两个进程间有共享的数据，那么直接指向同一个物理页即可</p>
+<h3 id="作为内存保护工具"><a href="#作为内存保护工具" class="headerlink" title="作为内存保护工具"></a>作为内存保护工具</h3><p>页表中的每个条目的高位部分是表示权限的位，MMU 可以通过检查这些位来进行权限控制（读、写、执行）</p>
+<h2 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h2><p>开始之前先来了解以下参数：</p>
+<p>N=2n,M=2m,P=2pN=2n,M=2m,P=2p</p>
+<p>其中 <code>N</code> 表示虚拟地址空间中的地址数量，<code>M</code> 表示物理地址空间中的地址数量，<code>P</code> 是每一页包含的字节数(page size)。</p>
+<p>虚拟地址(VA, Virtual Address)中的元素：</p>
+<ul>
+<li><code>TLBI</code>: TLB 的索引值</li>
+<li><code>TLBT</code>: TLB 的标签(tag)</li>
+<li><code>VPO</code>: 虚拟页偏移量</li>
+<li><code>VPN</code>: 虚拟页编号</li>
+</ul>
+<p>物理地址(PA, physical address)中的元素：</p>
+<ul>
+<li><code>PPO</code>: 物理页偏移量（与 <code>VPO</code> 的值相同）</li>
+<li><code>PPN</code>: 物理页编号</li>
+</ul>
+<p>然后我们通过一个具体的例子来说明如何进行地址翻译</p>
+<h3 id="多层页表-Multi-Level-Page-Table"><a href="#多层页表-Multi-Level-Page-Table" class="headerlink" title="多层页表 Multi-Level Page Table"></a>多层页表 Multi-Level Page Table</h3><p>虽然页表是一个表，但因为往往虚拟地址的位数比物理内存的位数要大得多，所以保存页表项(PTE) 所需要的空间也是一个问题。举个例子：</p>
+<p>假设每个页的大小是 4KB（2 的 12 次方），每个地址有 48 位，一条 PTE 记录有 8 个字节，那么要全部保存下来，需要的大小是：</p>
+<p>248×2−12×23=239bytes248×2−12×23=239bytes</p>
+<p>整整 512 GB！所以我们采用多层页表，第一层的页表中的条目指向第二层的页表，一个一个索引下去，最终寻找具体的物理地址，</p>
+<h3 id="地址翻译实例"><a href="#地址翻译实例" class="headerlink" title="地址翻译实例"></a>地址翻译实例</h3><p>来看一个简单的例子，我们的内存系统设定如下：</p>
+<ul>
+<li>14 位的虚拟地址</li>
+<li>12 位的物理地址</li>
+<li>页大小为 64 字节</li>
+</ul>
+<p>TLB 的配置为：</p>
+<ul>
+<li>能够存储 16 条记录</li>
+<li>每个集合有 4 条记录</li>
+</ul>
+<p>系统本身缓存（对应于物理地址）：</p>
+<ul>
+<li>16 行，每个块 4 个字节</li>
+<li>直接映射（即 16 个集合）</li>
+</ul>
+<h2 id="动态内存分配"><a href="#动态内存分配" class="headerlink" title="动态内存分配"></a>动态内存分配</h2><p>前面了解了虚拟内存的相关知识，这一节我们来看看动态内存分配的基本概念，相信这之后就知道诸如 <code>malloc</code> 和 <code>new</code> 这类方法是怎么做的了。</p>
+<p>程序员通过动态内存分配（例如 <code>malloc</code>）来让程序在运行时得到虚拟内存。动态内存分配器会管理一个虚拟内存区域，称为堆(heap)。</p>
+<p>分配器以块为单位来维护堆，可以进行分配或释放。有两种类型的分配器：</p>
+<ul>
+<li>显式分配器：应用分配并且回收空间（C 语言中的 <code>malloc</code> 和 <code>free</code>）</li>
+<li>隐式分配器：应用只负责分配，但是不负责回收（Java 中的垃圾收集）</li>
+</ul>
+<p>先来看看一个简单的使用 <code>malloc</code> 和 <code>free</code> 的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">void foo(int n) &#123;</span><br><span class="line">    int i, *p;</span><br><span class="line">    </span><br><span class="line">    /* Allocate a block of n ints */</span><br><span class="line">    p = (int *) malloc(n * sizeof(int));</span><br><span class="line">    if (p == NULL) &#123;</span><br><span class="line">        perror(&quot;malloc&quot;);</span><br><span class="line">        exit(0);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /* Initialize allocated block */</span><br><span class="line">    for (i=0; i&lt;n; i++)</span><br><span class="line">        p[i] = i;</span><br><span class="line"></span><br><span class="line">    /* Return allocated block to the heap */</span><br><span class="line">    free(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h3><p>我们已经知道了原理，现在就来看看怎么样能够实现一个高效的内存分配算法吧！在具体实现之前，需要考虑以下问题：</p>
+<ul>
+<li>给定一个指针，我们如何知道需要释放多少内存？</li>
+<li>如何记录未分配的块？</li>
+<li>实际需要的空间比未分配的空间要小的时候，剩下的空间怎么办？</li>
+<li>如果有多个区域满足条件，如何选择？</li>
+<li>释放空间之后如何进行记录？</li>
+</ul>
+<p>具体这部分书中提到了四种方法：</p>
+<ol>
+<li>隐式空闲列表 Implicit List</li>
+<li>显式空闲列表 Explicit List</li>
+<li>分离的空闲列表 Segregated Free List</li>
+<li>按照大小对块进行排序 Blocks Sorted by Size</li>
+</ol>
+<p>因为涉及的细节比较多，建议是详读书本的对应章节（第二版和第三版均为第九章第九节），这里不再赘述（如果需要的话之后我在另起一篇做详细介绍）</p>
+<p>这里提一点，就是如何确定哪部分空间合适，有三种方法：</p>
+<ol>
+<li>First Fit: 每次都从头进行搜索，找到第一个合适的块，线性查找</li>
+<li>Next Fit: 每次从上次搜索结束的位置继续搜索，速度较快，但可能会有更多碎片</li>
+<li>Best Fit: 每次遍历列表，找到最合适的块，碎片较少，但是速度最慢</li>
+</ol>
+<p>更详细可以参考这两篇文章：<a href="http://wdxtub.com/vault/csapp-18.html" target="_blank" rel="noopener">Dynamic Memory Allocation - Basic Concept</a> 和 <a href="http://wdxtub.com/vault/csapp-19.html" target="_blank" rel="noopener">Dynamic Memory Allocation - Advanced Concept</a></p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>所谓垃圾回收，就是我们不再需要显式释放所申请内存空间了，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void foo() &#123;</span><br><span class="line">    int *p = malloc(128);</span><br><span class="line">    return; /* p block is now garbage*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p>这种机制在许多动态语言中都有实现：Python, Ruby, Java, Perl, ML, Lisp, Mathematica。C 和 C++ 中也有类似的变种，但是需要注意的是，是不可能回收所有的垃圾的。</p>
+<p>我们如何知道什么东西才是『垃圾』呢？简单！只要没有任何指针指向的地方，不管有没有用，因为都不可能被使用，当然可以直接清理掉啦。不过这其实是需要一些前提条件的：</p>
+<ul>
+<li>我们可以知道哪里是指针，哪里不是指针</li>
+<li>每个指针都指向 block 的开头</li>
+<li>指针不能被隐藏(by coercing them to an <code>int</code>, and then back again)</li>
+</ul>
+<p>相关的算法如下：</p>
+<ul>
+<li>Mark-and-sweep collection (McCarthy, 1960)</li>
+<li>Reference counting (Collins, 1960)</li>
+<li>Copying collection (Minsky, 1963)</li>
+<li>Generational Collectors(Lieberman and Hewitt, 1983)</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们先了解了物理地址和虚拟地址的区别，然后在此基础上理解虚拟内存在缓存、内存管理与保护中所扮演的角色，并通过实际的例子学习虚拟内存到物理内存的翻译机制。</p>
+<p>有了前面的基础，简要介绍了动态内存分配的基本概念和管理动态内存分配的三种算法。最后提及了垃圾回收的基本原理和内存使用中常见的错误。</p>
+<p>尤其是动态内存分配和垃圾回收的部分，因为篇幅限制说得比较简单，一定要对照书本进行阅读和理解。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/csapp/" rel="tag"># csapp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/18/ch08/" rel="next" title="ch08">
+                <i class="fa fa-chevron-left"></i> ch08
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">李玉</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从物理内存到虚拟内存"><span class="nav-number">1.</span> <span class="nav-text">从物理内存到虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟内存的三个角色"><span class="nav-number">2.</span> <span class="nav-text">虚拟内存的三个角色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作为缓存工具"><span class="nav-number">2.1.</span> <span class="nav-text">作为缓存工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作为内存管理工具"><span class="nav-number">2.2.</span> <span class="nav-text">作为内存管理工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作为内存保护工具"><span class="nav-number">2.3.</span> <span class="nav-text">作为内存保护工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地址翻译"><span class="nav-number">3.</span> <span class="nav-text">地址翻译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多层页表-Multi-Level-Page-Table"><span class="nav-number">3.1.</span> <span class="nav-text">多层页表 Multi-Level Page Table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址翻译实例"><span class="nav-number">3.2.</span> <span class="nav-text">地址翻译实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态内存分配"><span class="nav-number">4.</span> <span class="nav-text">动态内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现细节"><span class="nav-number">4.1.</span> <span class="nav-text">实现细节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收"><span class="nav-number">5.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李玉</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
